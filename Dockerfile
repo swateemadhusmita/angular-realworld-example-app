@@ -1,11 +1,21 @@
-### STAGE 1: Build ###
-  FROM node:12.22-alpine3.10 AS build
-  WORKDIR /usr/src/app
-  COPY package.json package-lock.json ./
-  RUN npm i -g @angular/cli
+# ubuntu is used as base per requirement
+FROM ubuntu:latest
 
-  # Install app dependencies:
-  RUN npm i
+# install nodejs and npm as required for Angular
+RUN apt-get update
+RUN apt-get -y install curl
+RUN apt-get -y install gnupg
+RUN curl -sL https://deb.nodesource.com/setup_11.x  | bash -
+RUN apt-get -y install nodejs
+# install the angular cli in the container so that 'ng' commands can be used
+RUN npm install -g @angular/cli
 
-  COPY . .
-  RUN ng build --prod
+COPY . /usr/src/app
+WORKDIR /usr/src/app
+
+# node_modules are ignored to speed up build, so npm install is needed here
+RUN npm install
+
+# serve the angular app, by default its on port 4200
+EXPOSE 4200
+CMD ["ng","serve","--host", "0.0.0.0"]
