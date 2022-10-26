@@ -5,7 +5,7 @@ FROM ubuntu:latest
 RUN apt-get update
 RUN apt-get -y install curl
 RUN apt-get -y install gnupg
-RUN curl -sL https://deb.nodesource.com/setup_11.x  | bash -
+RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
 RUN apt-get -y install nodejs
 # install the angular cli in the container so that 'ng' commands can be used
 RUN npm install -g @angular/cli

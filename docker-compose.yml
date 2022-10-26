@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+
+  webapp:
+
+    build: .
+
+    image: swateemadhusmita/myapp:dev
+
+    ports:
+
+    - "4200:4200"
